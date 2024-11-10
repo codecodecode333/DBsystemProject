@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈 페이지</title>
+</head>
+<body>
+    <h1>데이터베이스 시스템 쇼핑몰</h1>
+    
+    <h2>상품 목록</h2>
+    <ul>
+        <li th:each="product : ${products}">
+            <a th:href="@{/products/{id}(id=${product.productId})}" th:text="${product.name}">Product Name</a>
+            <p th:text="${product.description}">Product Description</p>
+            <p th:text="'가격: ' + ${product.price}">Price</p>
+        </li>
+    </ul>
+</body>
+</html>

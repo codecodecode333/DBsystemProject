@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니</title>
+</head>
+<body>
+    <h1>장바구니</h1>
+    
+    <div>
+        <h2>장바구니 상품 목록</h2>
+        <ul>
+            <li th:each="item : ${cart.items}">
+                <p th:text="${item.product.name}">Product Name</p>
+                <p th:text="'수량: ' + ${item.quantity}">Quantity</p>
+                <p th:text="'가격: ' + ${item.product.price}">Price</p>
+            </li>
+        </ul>
+        <p th:text="'총 합계: ' + ${cart.totalPrice}">Total Price</p>
+    </div>
+    
+    <a href="/cart/add">상품 추가</a>
+</body>
+</html>

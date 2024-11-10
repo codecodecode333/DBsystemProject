@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 목록</title>
+</head>
+<body>
+    <h1>상품 목록</h1>
+    
+    <ul>
+        <li th:each="product : ${products}">
+            <a th:href="@{/products/{id}(id=${product.productId})}" th:text="${product.name}">Product Name</a>
+            <p th:text="${product.description}">Product Description</p>
+            <p th:text="'가격: ' + ${product.price}">Price</p>
+        </li>
+    </ul>
+</body>
+</html>

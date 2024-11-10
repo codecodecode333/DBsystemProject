@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객 정보</title>
+</head>
+<body>
+    <h1>고객 프로필</h1>
+    
+    <div>
+        <p th:text="'이름: ' + ${customer.name}">Customer Name</p>
+        <p th:text="'이메일: ' + ${customer.email}">Customer Email</p>
+    </div>
+    
+    <a href="/customers/edit">고객 정보 수정</a>
+</body>
+</html>
