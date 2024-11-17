@@ -55,7 +55,7 @@ public class CustomerService {
     }
 
     //주문목록조회
-    public List<Order> getOrdersByCustomerId(Long customerId) {
+    public List<Orders> getOrdersByCustomerId(Long customerId) {
         Customer customer = getCustomerById(customerId);  // 고객 정보 확인
         return orderRepository.findByCustomer(customer);  // 주문 목록 조회
     }
@@ -70,5 +70,9 @@ public class CustomerService {
     public void deleteOrdersByCustomerId(Long customerId) {
         Customer customer = getCustomerById(customerId);  // 고객 정보 확인
         orderRepository.deleteByCustomer(customer);  // 고객과 연결된 주문 삭제
+    }
+    //email로 찾기
+    public Customer findByEmail(String email) {
+        return customerRepository.findByEmail(email);
     }
 }

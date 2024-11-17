@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -21,7 +23,12 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public String viewProduct(@PathVariable Long id, Model model) {
+    public String viewProduct(HttpSession session, @PathVariable Long id, Model model) {
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("loggedInUser", loggedInUser);
         model.addAttribute("product", productService.getProductById(id));
         return "product-detail"; // product-detail.html
     }

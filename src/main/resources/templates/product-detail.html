@@ -4,17 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상품 상세</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        /* 헤더 스타일 */
+        .header {
+            padding: 10px 20px;
+            background-color: #eaf2f8;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .left-header {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 버튼과 텍스트 사이 간격 */
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .home-link:hover {
+            background-color: #1d6fa5;
+        }
+
+        .user-message {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .user-info {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .user-info span {
+            font-weight: bold;
+        }
+
+        .user-info a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        .user-info a:hover {
+            color: #1d6fa5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            background-color: #1d6fa5;
+        }
+
+        /* 상품 상세 정보 */
+        .product-details {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-details p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .product-details p span {
+            font-weight: bold;
+        }
+
+        /* 장바구니 폼 스타일 */
+        form {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 14px;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1d6fa5;
+        }
+
+        /* 오류 메시지 스타일 */
+        .error {
+            color: red;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <!-- 헤더 영역 -->
+    <div class="header">
+        <!-- 홈 버튼 및 사용자 메시지 -->
+        <div class="left-header">
+            <a href="/home" class="home-link">홈</a>
+            <span class="user-message" th:text="'안녕하세요, ' + ${loggedInUser.name} + ' 님!'">안녕하세요, 사용자님!</span>
+
+            <div class="user-info">
+            <a th:href="@{/logout}">로그아웃</a>
+        </div>
+        </div>
+
+        <div class="nav-links">
+            <a th:href="@{/cart/view}">장바구니 보기</a>
+            <a th:href="@{/orders/view}">주문 목록 보기</a>
+        </div>
+    </div>
+
     <h1 th:text="${product.name}">Product Name</h1>
     
-    <p th:text="${product.description}">Product Description</p>
-    <p th:text="'가격: ' + ${product.price}">Price</p>
-    <p th:text="'재고 수: ' + ${product.stock}">Stock</p>
-    
+    <div class="product-details">
+        <p th:text="'설명: ' + ${product.description}">Product Description</p>
+        <p th:text="'가격: ' + ${product.price} + ' 원'">Price</p>
+        <p th:text="'재고 수: ' + ${product.stock}">Stock</p>
+    </div>
+
+    <!-- 오류 메시지 표시 -->
+    <p th:if="${error}" th:text="${error}" class="error"></p>
+
     <form action="/cart/add" method="post">
-        <input type="number" name="quantity" min="1" max="100" value="1" />
+        <input type="hidden" name="productId" th:value="${product.productId}"> <!-- productId가 제대로 설정되는지 확인 -->
+        <label for="quantity">수량:</label>
+        <input type="number" id="quantity" name="quantity" value="1" min="1">
         <button type="submit">장바구니에 추가</button>
     </form>
+
 </body>
 </html>

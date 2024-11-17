@@ -4,17 +4,184 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주문 목록</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        /* 헤더 스타일 */
+        .header {
+            padding: 10px 20px;
+            background-color: #eaf2f8;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .left-header {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 버튼과 텍스트 사이 간격 */
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .home-link:hover {
+            background-color: #1d6fa5;
+        }
+
+        .user-message {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .user-info {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .user-info span {
+            font-weight: bold;
+        }
+
+        .user-info a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        .user-info a:hover {
+            color: #1d6fa5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            background-color: #1d6fa5;
+        }
+
+        /* 주문 목록 스타일 */
+        .order-list {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item p {
+            margin: 5px 0;
+        }
+
+        button {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #3498db;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* 홈으로 버튼 */
+        .back-to-home {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px 15px;
+            width: 150px;
+            font-size: 16px;
+            color: white;
+            background-color: #3498db;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            background-color: #1d6fa5;
+        }
+    </style>
 </head>
 <body>
+    <div class="header">
+        <!-- 홈 버튼 및 사용자 메시지 -->
+        <div class="left-header">
+            <a href="/home" class="home-link">홈</a>
+            <span class="user-message" th:text="'안녕하세요, ' + ${loggedInUser.name} + ' 님!'">안녕하세요, 사용자님!</span>
+
+            <div class="user-info">
+            <a th:href="@{/logout}">로그아웃</a>
+        </div>
+        </div>
+
+        <div class="nav-links">
+            <a th:href="@{/cart/view}">장바구니 보기</a>
+            <a th:href="@{/orders/view}">주문 목록 보기</a>
+        </div>
+    </div>
     <h1>주문 목록</h1>
     
-    <ul>
-        <li th:each="order : ${orders}">
+    <div class="order-list">
+        <div class="order-item" th:each="order : ${orders}">
             <p th:text="'주문 ID: ' + ${order.orderId}">Order ID</p>
             <p th:text="'상품명: ' + ${order.product.name}">Product Name</p>
             <p th:text="'수량: ' + ${order.quantity}">Quantity</p>
             <p th:text="'주문 상태: ' + ${order.orderStatus}">Order Status</p>
-        </li>
-    </ul>
+
+            <form action="/orders/remove" method="post" style="display: inline-block;">
+                <input type="hidden" name="orderId" th:value="${order.orderId}">
+                <button type="submit" style="background-color: #e74c3c;">취소</button>
+            </form>
+        </div>
+    </div>
+
+    <p th:if="${message}" th:text="${message}" style="color: green;"></p>
+    <p th:if="${error}" th:text="${error}" style="color: red;"></p>
 </body>
 </html>

@@ -25,7 +25,7 @@ public class Product {
 
     private String name; // 상품 이름
     private String description; // 상품 설명
-    private Double price; // 상품 가격
+    private int price; // 상품 가격
 
     @Column(nullable = false)
     private Integer stock; // 재고 수
@@ -34,5 +34,5 @@ public class Product {
     private String category; // 카테고리
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<Order> orders; // 주문에서 참조되는 상품 목록
+    private Set<Orders> orders; // 주문에서 참조되는 상품 목록
 }

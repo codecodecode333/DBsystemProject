@@ -4,17 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>홈 페이지</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #2c3e50;
+        }
+
+        /* 헤더 스타일 */
+        .header {
+            padding: 10px 20px;
+            background-color: #eaf2f8;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .left-header {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 버튼과 텍스트 사이 간격 */
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .home-link:hover {
+            background-color: #1d6fa5;
+        }
+
+        .user-message {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .user-info {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .user-info span {
+            font-weight: bold;
+        }
+
+        .user-info a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        .user-info a:hover {
+            color: #1d6fa5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            background-color: #1d6fa5;
+        }
+        /* 상품 목록 스타일 */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 10px auto;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            max-width: 600px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        li a {
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        li p {
+            margin: 8px 0;
+        }
+
+        li p:first-of-type {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+    </style>
 </head>
 <body>
-    <h1>데이터베이스 시스템 쇼핑몰</h1>
-    
-    <h2>상품 목록</h2>
-    <ul>
-        <li th:each="product : ${products}">
-            <a th:href="@{/products/{id}(id=${product.productId})}" th:text="${product.name}">Product Name</a>
-            <p th:text="${product.description}">Product Description</p>
-            <p th:text="'가격: ' + ${product.price}">Price</p>
-        </li>
-    </ul>
+    <!-- 헤더 영역 -->
+    <div class="header">
+        <!-- 홈 버튼 및 사용자 메시지 -->
+        <div class="left-header">
+            <a href="/home" class="home-link">홈</a>
+            <span class="user-message" th:text="'안녕하세요, ' + ${loggedInUser.name} + ' 님!'">안녕하세요, 사용자님!</span>
+
+            <div class="user-info">
+            <a th:href="@{/logout}">로그아웃</a>
+        </div>
+        </div>
+
+        <div class="nav-links">
+            <a th:href="@{/cart/view}">장바구니 보기</a>
+            <a th:href="@{/orders/view}">주문 목록 보기</a>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="container">
+        <h1>데이터베이스 시스템 쇼핑몰</h1>
+        
+        <h2>상품 목록</h2>
+        <ul>
+            <!-- 상품 리스트를 반복 -->
+            <li th:each="product : ${products}">
+                <!-- 상품 이름 및 상세 보기 -->
+                <a th:href="@{/products/{id}(id=${product.productId})}" th:text="${product.name}">Product Name</a>
+                <p th:text="${product.description}">Product Description</p>
+                <p th:text="'가격: ' + ${product.price}">Price</p>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>

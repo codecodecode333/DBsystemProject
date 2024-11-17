@@ -29,5 +29,5 @@ public class Customer {
     private Set<Cart> carts; // 고객의 장바구니 목록
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private Set<Order> orders; // 고객의 주문 목록
+    private Set<Orders> orders; // 고객의 주문 목록
 }
