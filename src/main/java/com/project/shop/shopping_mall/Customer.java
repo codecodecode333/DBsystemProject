@@ -24,6 +24,7 @@ public class Customer {
     private String name; // 고객 이름
     private String email; // 고객 이메일
     private String password; // 고객 비밀번호
+    private String addr; // 고객 비밀번호
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Cart> carts; // 고객의 장바구니 목록

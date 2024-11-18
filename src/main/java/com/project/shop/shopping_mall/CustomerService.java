@@ -24,8 +24,8 @@ public class CustomerService {
     }
 
     //고객 등록
-    public Customer createCustomer(String name, String email, String password) {
-        Customer customer = new Customer(null, name, email, password, null, null);
+    public Customer createCustomer(String name, String email, String password, String addr) {
+        Customer customer = new Customer(null, name, email, password, addr, null, null);
         customer.setName(name);
 
         return customerRepository.save(customer);

@@ -17,8 +17,8 @@ public class CustomerController {
     private CustomerService customerService;
 
     @PostMapping("/signup")
-    public String signUp(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
-        customerService.createCustomer(name, email, password);
+    public String signUp(@RequestParam String name, @RequestParam String email, @RequestParam String password, @RequestParam String addr) {
+        customerService.createCustomer(name, email, password, addr);
         return "redirect:/login"; // 회원가입 후 로그인 페이지로 리다이렉트
     }
 
